@@ -26,13 +26,14 @@ public class App
     public static void main(String[] args)
     {
         Config config = ConfigFactory.load();
-        if (args != null && args.length == 1) {
+        if (args != null && args.length == 1)
+        {
             System.out.println("using 1st arg as path to config");
             File configFile = new File(args[0]);
             config = ConfigFactory.parseFile(configFile);
         }
         System.out.println("loaded config:\n" + config.entrySet());
-        
+
         URL resource = Resources.getResource("placeholder.txt");
         File placeholder = new File(resource.getFile());
         System.out.println("placeholder.txt = " + resource.getPath());
@@ -49,7 +50,7 @@ public class App
         }
 
         String db_path = FilenameUtils.concat(project_root.toString(), "rocksdb");
-
+        System.out.println("rocksDB root path will be at " + db_path);
     }
 
 }

@@ -29,7 +29,7 @@ import org.rocksdb.Statistics;
 import org.rocksdb.WriteBatch;
 import org.rocksdb.WriteOptions;
 
-import euler.dbs.RColumns;
+import euler.dbs.RocksCols;
 import euler.dbs.RocksDBUtils;
 
 public class TestRocksDB
@@ -71,7 +71,7 @@ public class TestRocksDB
     @Test
     public void testColumnFamily()
     {
-        String dummy_cf = new String(RColumns.DEFAULT.cName);
+        String dummy_cf = new String(RocksCols.DEFAULT.cName);
         final List<ColumnFamilyDescriptor> columnFamilyDescriptors = RocksDBUtils.knownColumnDescriptors();
         try (final Options options = new Options();
                 final Filter bloomFilter = new BloomFilter(10);
@@ -93,11 +93,11 @@ public class TestRocksDB
             try (final RocksDB db = RocksDB.open(new DBOptions(options), db_path, columnFamilyDescriptors,
                                                  columnFamilyHandles))
             {
-                assertEquals(RColumns.values().length, columnFamilyHandles.size());
-                assertEquals(dummy_cf, new String(columnFamilyHandles.get(RColumns.DEFAULT.ordinal()).getName()));
+                assertEquals(RocksCols.values().length, columnFamilyHandles.size());
+                assertEquals(dummy_cf, new String(columnFamilyHandles.get(RocksCols.DEFAULT.ordinal()).getName()));
 
                 // put and get from non-default column family
-                db.put(columnFamilyHandles.get(RColumns.DEFAULT.ordinal()), new WriteOptions(), "key".getBytes(),
+                db.put(columnFamilyHandles.get(RocksCols.DEFAULT.ordinal()), new WriteOptions(), "key".getBytes(),
                        "value".getBytes());
 
                 // atomic write

@@ -1,6 +1,6 @@
 package euler.dbs;
 
-public enum RColumns
+public enum RocksCols
 {
     DEFAULT("default".getBytes()), 
     FIBS_INT64("FIBS_INT64".getBytes()), 
@@ -8,7 +8,7 @@ public enum RColumns
 
     public final byte[] cName;
 
-    RColumns(byte[] cName)
+    RocksCols(byte[] cName)
     {
         this.cName = cName;
     }

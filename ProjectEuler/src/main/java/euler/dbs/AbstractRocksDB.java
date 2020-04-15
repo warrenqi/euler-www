@@ -33,8 +33,8 @@ public class AbstractRocksDB
         RocksDB.loadLibrary();
     }
 
-    public AbstractRocksDB(String dbPath, Options options, Statistics stats, RateLimiter rateLimiter)
-            throws RocksDBException
+    public AbstractRocksDB(String dbPath, Options options, Statistics stats,
+            RateLimiter rateLimiter) throws RocksDBException
     {
         this.dbPath = dbPath;
         this.options = options; // TODO wqi maybe make options configgable

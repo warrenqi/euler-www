@@ -14,10 +14,10 @@ public class FibDatabaseRocksDB extends AbstractRocksDB implements FibDatabase
 {
 
     private final static byte[] HIGHEST_IDX = "highest".getBytes();
-    private final static int COLUMN = RColumns.FIBS_INT64.ordinal();
+    private final static int COLUMN = RocksCols.FIBS_INT64.ordinal();
 
-    public FibDatabaseRocksDB(String dbPath, Options options, Statistics stats, RateLimiter rateLimiter)
-            throws RocksDBException
+    public FibDatabaseRocksDB(String dbPath, Options options, Statistics stats,
+            RateLimiter rateLimiter) throws RocksDBException
     {
         super(dbPath, options, stats, rateLimiter);
         assert (this.db != null);

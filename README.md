@@ -1,6 +1,8 @@
 **Project Euler**
 =================
 
+TODO: still need to move old project into this one.
+
 Implementing Project Euler problems for fun.
 
 ### Libraries used

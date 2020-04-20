@@ -45,6 +45,11 @@
 			<version>2.6</version>
 		</dependency>
 		<dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
+        </dependency>
+		<dependency>
 			<groupId>commons-math</groupId>
 			<artifactId>commons-math</artifactId>
 			<version>3.6.1</version>

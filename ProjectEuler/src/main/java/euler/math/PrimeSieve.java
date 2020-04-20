@@ -14,8 +14,8 @@ public class PrimeSieve
     public PrimeSieve(PrimeDb db)
     {
         this.db = db;
-        this.db.put(0, true);
-        this.db.put(1, true);
+        this.db.put(0, false);
+        this.db.put(1, false);
         this.db.put(2, true);
         this.db.setWatermark(2L);
     }

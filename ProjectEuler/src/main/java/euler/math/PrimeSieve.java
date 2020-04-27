@@ -11,16 +11,22 @@ public class PrimeSieve
 
     private PrimeDb db;
 
-    public PrimeSieve(PrimeDb db)
+    public PrimeSieve(PrimeDb db, long limit)
     {
         this.db = db;
         this.db.put(0, false);
         this.db.put(1, false);
         this.db.put(2, true);
         this.db.setWatermark(2L);
+        this.isPrime(limit, true);
     }
 
-    public boolean isPrime(long number, boolean computeIfMissing)
+    public boolean isPrime(long number)
+    {
+        return this.db.isPrime(number);
+    }
+
+    boolean isPrime(long number, boolean computeIfMissing)
     {
         if (computeIfMissing && number >= this.db.getWatermark())
         {
@@ -29,7 +35,7 @@ public class PrimeSieve
         return this.db.isPrime(number);
     }
 
-    public void computeAndStore(long number)
+    void computeAndStore(long number)
     {
         long curWatermark = this.db.getWatermark();
         this.db.fillSet(curWatermark + 1, number);
@@ -57,7 +63,7 @@ public class PrimeSieve
     }
 
     /** eliminate all multiples of inputPrime until upperbound, inclusive */
-    public void sieve(long inputPrime, long upperbound)
+    void sieve(long inputPrime, long upperbound)
     {
         long idx = inputPrime;
         long multiplier = inputPrime;

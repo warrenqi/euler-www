@@ -26,13 +26,12 @@ public class Problem037
 
     public Problem037(int upperLimit)
     {
-        PrimeSieve primes = new PrimeSieve(new PrimeDbInMemory());
-        primes.isPrime(upperLimit, true);
+        PrimeSieve primes = new PrimeSieve(new PrimeDbInMemory(), upperLimit);
         TIntArrayList primeList = new TIntArrayList();
 
         for (int i = 2; i < upperLimit; i++)
         {
-            if (primes.isPrime(i, false))
+            if (primes.isPrime(i))
                 primeList.add(i);
         }
 
@@ -64,7 +63,7 @@ public class Problem037
         boolean res = true;
         for (int i = 0; i < nums.size(); i++)
         {
-            res = res && primes.isPrime(nums.get(i), false);
+            res = res && primes.isPrime(nums.get(i));
         }
         return res;
     }

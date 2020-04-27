@@ -1,12 +1,9 @@
-package euler;
+package euler.math;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
-import euler.math.PrimeDbInMemory;
-import euler.math.PrimeSieve;
 
 public class TestPrimeSieve
 {
@@ -14,7 +11,7 @@ public class TestPrimeSieve
     @Test
     public void test()
     {
-        PrimeSieve ps = new PrimeSieve(new PrimeDbInMemory());
+        PrimeSieve ps = new PrimeSieve(new PrimeDbInMemory(), 2L);
         assertTrue(ps.isPrime(2L, false));
         assertTrue(ps.isPrime(3L, true));
         assertFalse(ps.isPrime(4L, true));
@@ -30,9 +27,8 @@ public class TestPrimeSieve
     @Test
     public void testTwoPrimes()
     {
-        PrimeSieve ps = new PrimeSieve(new PrimeDbInMemory());
+        PrimeSieve ps = new PrimeSieve(new PrimeDbInMemory(), 200_000L);
         long starttime = System.currentTimeMillis();
-        ps.isPrime(200000L, true);
         System.out.println("time for 200_000 prime calcs = "
                 + (System.currentTimeMillis() - starttime));
         assertTrue(ps.isPrime(104743L, false));

@@ -20,15 +20,14 @@ public class Problem003
         // long input = 13195;
         int primeUpper = (int) Math.sqrt(input);
 
-        PrimeSieve primes = new PrimeSieve(new PrimeDbInMemory());
+        PrimeSieve primes = new PrimeSieve(new PrimeDbInMemory(), primeUpper);
 
         long startime = System.currentTimeMillis();
-        primes.isPrime(primeUpper, true);
         System.out.println("prime compute took " + (System.currentTimeMillis() - startime));
 
         for (int i = primeUpper; i >= 0; i--)
         {
-            if (primes.isPrime(i, false))
+            if (primes.isPrime(i))
             {
                 if (input % i == 0)
                 {

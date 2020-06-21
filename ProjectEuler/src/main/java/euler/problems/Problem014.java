@@ -26,6 +26,8 @@ import gnu.trove.map.hash.TLongIntHashMap;
  * ------- dynamic programming, memoizing only sequence sizes ------- <br>
  * timing SeqCountOnly = 181 <br>
  * 
+ * TODO wqi inspect JVM codegen & memory layout for this problem
+ * 
  * 
  * @author warren
  *

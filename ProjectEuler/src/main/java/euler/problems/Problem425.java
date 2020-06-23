@@ -1,5 +1,8 @@
 package euler.problems;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
@@ -9,6 +12,8 @@ import euler.math.PrimeDbInMemory;
 import euler.math.PrimeSieve;
 import gnu.trove.list.TIntList;
 import gnu.trove.list.array.TIntArrayList;
+import gnu.trove.set.TIntSet;
+import gnu.trove.set.hash.TIntHashSet;
 
 public class Problem425
 {
@@ -16,12 +21,11 @@ public class Problem425
     public static void main(String[] args)
     {
         Problem425 t = new Problem425(10_000);
-        System.out.println("2 -> " + t.connectedPrimes(2, 127));
-        System.out.println("3 -> " + t.connectedPrimes(3, 127));
-        System.out.println("13 -> " + t.connectedPrimes(13, 127));
-        System.out.println("113 -> " + t.connectedPrimes(113, 127));
-        // TODO wqi break loopbacks now there's a cycle in this graph
-        System.out.println("103 -> " + t.connectedPrimes(103, 127));
+        System.out.println("2 -> " + t.searchStep(2, 127));
+        System.out.println("3 -> " + t.searchStep(3, 127));
+        System.out.println("13 -> " + t.searchStep(13, 127));
+        System.out.println("113 -> " + t.searchStep(113, 127));
+        System.out.println("103 -> " + t.searchStep(103, 127));
 
     }
 
@@ -45,6 +49,8 @@ public class Problem425
         return new ImmutablePair<Integer, Integer>(min, max);
     }
 
+    private final Map<Integer, TIntList> cache = new HashMap<>();
+
     /**
      * 
      * @param x
@@ -55,6 +61,11 @@ public class Problem425
      */
     public TIntList connectedPrimes(int x, int maxP)
     {
+        if (cache.containsKey(x))
+        {
+            return cache.get(x);
+        }
+
         // get range of possible connected numbers
         // fetch primes in that range
         // filter to isConnected
@@ -70,7 +81,31 @@ public class Problem425
                 res.add(i);
             }
         }
+        cache.put(x, res);
 
+        return res;
+    }
+
+    public TIntList filterVisited(TIntList connectedPrimes, TIntSet visited)
+    {
+        TIntList res = new TIntArrayList(connectedPrimes.size());
+        for (int i = 0; i < connectedPrimes.size(); i++)
+        {
+            if (!visited.contains(connectedPrimes.get(i)))
+            {
+                res.add(connectedPrimes.get(i));
+            }
+        }
+        return res;
+    }
+
+    private final TIntSet visited = new TIntHashSet();
+
+    public TIntList searchStep(int x, int maxP)
+    {
+        TIntList connectedPrimes = connectedPrimes(x, maxP);
+        visited.add(x);
+        TIntList res = filterVisited(connectedPrimes, visited);
         return res;
     }
 

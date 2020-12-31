@@ -5,7 +5,10 @@ import gnu.trove.list.array.TLongArrayList;
 public interface PrimeDb
 {
 
-    /** set numbers start to end as Prime, inclusive */
+    /**
+     * set numbers start to end as Prime, inclusive. Use as initialization step
+     * in computing new primes
+     */
     public void fillSet(long startInclusive, long endInclusive);
 
     public void put(long i, boolean isPrime);

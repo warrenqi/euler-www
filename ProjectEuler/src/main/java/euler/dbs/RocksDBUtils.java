@@ -29,7 +29,10 @@ public class RocksDBUtils
     {
         URL resource = Resources.getResource("placeholder.txt");
         File placeholder = new File(resource.getFile());
-        Path project_root = placeholder.toPath().getParent().getParent().getParent();
+        Path project_root = placeholder.toPath()
+                                       .getParent()
+                                       .getParent()
+                                       .getParent();
         String db_path = FilenameUtils.concat(project_root.toString(), "rocksdb");
         System.out.println("rocksDB path is at " + db_path);
         return db_path;
@@ -55,8 +58,10 @@ public class RocksDBUtils
     public static void setDBOptions(Options db_options, Statistics db_stats,
             RateLimiter db_rateLimiter)
     {
-        db_options.setCreateIfMissing(true).setCompressionType(CompressionType.SNAPPY_COMPRESSION)
-                  .setCompactionStyle(CompactionStyle.UNIVERSAL).setKeepLogFileNum(7L);
+        db_options.setCreateIfMissing(true)
+                  .setCompressionType(CompressionType.SNAPPY_COMPRESSION)
+                  .setCompactionStyle(CompactionStyle.UNIVERSAL)
+                  .setKeepLogFileNum(7L);
         db_options.setStatistics(db_stats);
         db_options.setRateLimiter(db_rateLimiter);
         db_options.setCreateMissingColumnFamilies(true);

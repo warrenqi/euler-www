@@ -60,10 +60,11 @@ public class Problem425
     public static void main(String[] args)
     {
         Problem425 t = new Problem425(10_000);
-        System.out.println("2 -> " + t.searchStep(2, 100));
-        System.out.println("3 -> " + t.searchStep(3, 100));
-        System.out.println("5 -> " + t.searchStep(5, 100));
-        System.out.println("7 -> " + t.searchStep(7, 100));
+        TIntSet searchStepCache = new TIntHashSet();
+        System.out.println("2 -> " + t.searchStep(2, 100, searchStepCache));
+        System.out.println("3 -> " + t.searchStep(3, 100, searchStepCache));
+        System.out.println("5 -> " + t.searchStep(5, 100, searchStepCache));
+        System.out.println("7 -> " + t.searchStep(7, 100, searchStepCache));
         // System.out.println("13 -> " + t.searchStep(13, 127));
         // System.out.println("113 -> " + t.searchStep(113, 127));
         // System.out.println("103 -> " + t.searchStep(103, 127));
@@ -82,17 +83,20 @@ public class Problem425
         primeRelatives = t.primeRelativesChain(2, 103);
         System.out.println("primeRelatives of 2 -> 103 = " + primeRelatives);
 
+        // then eliminate all prime relatives of 2, sum them up to output
+        t = new Problem425(1_000);
+        TIntSet twoRelatives = t.primeRelatives(2, 130);
+        System.out.println(twoRelatives);
+
         // cache the intermediate chains
 
-        // then eliminate all prime relatives of 2, sum them up to output
+        // parallelize the search
 
     }
 
     private final PrimeSieve primes;
 
     private final Map<Integer, TIntList> cache = new HashMap<>();
-
-    private final TIntSet visited = new TIntHashSet();
 
     public Problem425(int maxPrime)
     {
@@ -108,7 +112,7 @@ public class Problem425
      * @return A list of connected primes less than or equal to maxP, excluding
      *         the "visited" primes of this instance. Empty if none found.
      */
-    public TIntList searchStep(int x, int maxP)
+    public TIntList searchStep(int x, int maxP, TIntSet visited)
     {
         TIntList connectedPrimes = connectedPrimes(x, maxP);
         visited.add(x);
@@ -190,6 +194,9 @@ public class Problem425
      */
     public TIntList primeRelativesChain(int x, int target)
     {
+        // for now, use a new searchStepCache for every chain discovery
+        TIntSet searchStepCache = new TIntHashSet();
+
         // Use a node -> parent mapping to back trace our steps
         TIntIntMap leafToRoots = new TIntIntHashMap();
 
@@ -200,7 +207,7 @@ public class Problem425
         {
             int val = queue.removeAt(0);
 
-            TIntList valConnectedPrimes = searchStep(val, target);
+            TIntList valConnectedPrimes = searchStep(val, target, searchStepCache);
 
             if (!valConnectedPrimes.isEmpty())
             {
@@ -236,6 +243,26 @@ public class Problem425
             res.reverse();
         }
 
+        return res;
+    }
+
+    /**
+     * 
+     * @param x
+     *            - usually set to 2 in the problem
+     * @param maxP
+     * @return set of primes who are relatives of x
+     */
+    public TIntSet primeRelatives(int x, int maxP)
+    {
+        TIntSet res = new TIntHashSet();
+        for (int i = maxP; i > 3; i--)
+        {
+            if (primes.isPrime(i) && !primeRelativesChain(x, i).isEmpty())
+            {
+                res.add(i);
+            }
+        }
         return res;
     }
 

@@ -41,7 +41,8 @@ public class DigitUtils
     }
 
     /**
-     * A naive way to factorize. Includes input number X in the output
+     * A naive way to factorize (get all unique divisors). Includes input number
+     * X in the output
      */
     public static SortedSet<Integer> factorize(int x)
     {
